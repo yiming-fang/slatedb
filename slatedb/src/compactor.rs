@@ -2271,8 +2271,7 @@ mod tests {
             )
             .await
             .unwrap();
-        let block_metas = index.borrow().block_meta();
-        assert_eq!(block_metas.len(), 4);
+        assert_eq!(index.len(), 4);
 
         let mut expected_ids: Vec<u64> = expected_entries
             .iter()
@@ -2280,7 +2279,7 @@ mod tests {
                 ExpectedEntry::Index => info.index_offset,
                 ExpectedEntry::Filter => info.filter_offset,
                 ExpectedEntry::Stats => info.stats_offset,
-                ExpectedEntry::DataBlock(position) => block_metas.get(*position).offset(),
+                ExpectedEntry::DataBlock(position) => index.offset(*position),
             })
             .collect();
         expected_ids.sort();
